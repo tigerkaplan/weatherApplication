@@ -1,12 +1,16 @@
-const searchInput = document.querySelector("#search-input");
-const searchButton = document.querySelector("#search-button");
-const currentWeatherDiv = document.querySelector(".current-weather");
-const daysForecastDiv = document.querySelector(".days-forecast");
+const searchInput = document.querySelector("#search-input");  // Search location
+const searchButton = document.querySelector("#search-button"); // Search button
+const currentWeatherDiv = document.querySelector(".currentWeather");
+const daysForecastDiv = document.querySelector(".forecastDays");
 
-const API_KEY = "6224c5c290251c06942ed184e3f76364"; 
+const APIKey = "6224c5c290251c06942ed184e3f76364"; 
+const API_URL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+var city;
+api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
 
 
-// Create weather card HTML based on weather data
+
+//weather card
 const createWeatherCard = (cityName, weatherItem, index) => {
     if(index === 0) {
         return `<div class="mt-3 d-flex justify-content-between">
@@ -22,8 +26,8 @@ const createWeatherCard = (cityName, weatherItem, index) => {
                     </div>
                 </div>`;
     } else {
-        return `<div class="col mb-3">
-                    <div class="card border-0 bg-secondary text-white">
+        return ` class="mt-3 d-flex justify-content-between">
+                    <div class="card border-0 text-black">
                         <div class="card-body p-3 text-white">
                             <h5 class="card-title fw-semibold">(${weatherItem.dt_txt.split(" ")[0]})</h5>
                             <img src="https://openweathermap.org/img/wn/${weatherItem.weather[0].icon}.png" alt="weather icon">
@@ -39,11 +43,9 @@ const createWeatherCard = (cityName, weatherItem, index) => {
 // Get weather details of passed latitude and longitude
 const getWeatherDetails = (cityName, latitude, longitude) => {
     const WEATHER_API_URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`;
-
     fetch(WEATHER_API_URL).then(response => response.json()).then(data => {
         const forecastArray = data.list;
         const uniqueForecastDays = new Set();
-
         const fiveDaysForecast = forecastArray.filter(forecast => {
             const forecastDate = new Date(forecast.dt_txt).getDate();
             if (!uniqueForecastDays.has(forecastDate) && uniqueForecastDays.size < 6) {
@@ -52,11 +54,9 @@ const getWeatherDetails = (cityName, latitude, longitude) => {
             }
             return false;
         });
-
         cityInput.value = "";
         currentWeatherDiv.innerHTML = "";
         daysForecastDiv.innerHTML = "";
-
         fiveDaysForecast.forEach((weatherItem, index) => {
             const html = createWeatherCard(cityName, weatherItem, index);
             if (index === 0) {
@@ -69,7 +69,6 @@ const getWeatherDetails = (cityName, latitude, longitude) => {
         alert("An error occurred while fetching the weather forecast!");
     });
 }
-
 // Get coordinates of entered city name
 const getCityCoordinates = () => {
     const cityName = cityInput.value.trim();
@@ -84,5 +83,6 @@ const getCityCoordinates = () => {
         alert("An error occurred while fetching the coordinates!");
     });
 }
-
 searchButton.addEventListener("click", () => getCityCoordinates());
+
+
