@@ -1,11 +1,11 @@
 
-## Work Day Planner
+## Weather Application
 
-The project about using 101 Javascript element variables on different projects
+The project about to reach weather temperature via application. 
 
 
 ## About the Project
-the project shows that  front-end developer's project work for on it. The project on how Javascript using on finances sector. 
+the project shows chosen city's weather current day and following 5 days
 
 ## Screenshots
 
@@ -33,6 +33,8 @@ the project shows that  front-end developer's project work for on it. The projec
 
 
 ## Used By
+
+The application used by travelers, students and to learn current weather condition the chosen city.
 
 ## Contributing
 
