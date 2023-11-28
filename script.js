@@ -1,4 +1,4 @@
-var cityInput = document.querySelector("#search-input"); // Search location
+const cityInput = document.querySelector("#search-input"); // Search location
 const searchButton = document.querySelector("#search-button"); // Search button
 const currentWeatherDiv = document.querySelector(".currentWeather");
 const daysForecastDiv = document.querySelector(".forecastDays");
@@ -12,7 +12,8 @@ const createWeatherCard = (cityName, weatherItem, index) => {
     return `<div class="mt-3 d-flex justify-content-between">
                     <div>
                         <h3 class="fw-bold">${cityName} (${weatherItem.dt_txt.split(
-      " ")[0]})</h3>
+      " "
+    )[0]})</h3>
                         <h6 class="my-3 mt-3">Temperature: ${(weatherItem.main
                           .temp - 273.15).toFixed(2)}°C</h6>
                         <h6 class="my-3">Wind: ${weatherItem.wind
@@ -78,13 +79,16 @@ const getWeatherDetails = (cityName, latitude, longitude) => {
         }
       });
     })
+    .catch(() => {
+        alert ('An error occurred while fetching the weather forecast!');
+    });
 };
 // Get coordinates of entered city name
 
 const getCityCoordinates = () => {
-  var cityName = cityInput.val().trim();
+  const cityName = cityInput.value.trim();
   if (cityName === "") return alert("Please enter a city name");
-console.log(cityName);
+
   const geoQueryURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${APIKey}`;
 
   fetch(geoQueryURL)
@@ -93,8 +97,10 @@ console.log(cityName);
       if (!data.length) return alert(`No coordinates found for ${cityName}`);
       const { lat, lon, name } = data[0];
       getWeatherDetails(name, lat, lon);
-      console.log(geoQueryURL);
     })
+    .catch(() => {
+      alert("An error occurred while fetching the coordinates!");
+    });
 };
 
-searchButton.addEventListener("click", getCityCoordinates);
+searchButton.addEventListener("click", () => getCityCoordinates());
