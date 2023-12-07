@@ -1,5 +1,6 @@
 var cityInput = document.querySelector("#search-input"); // Search location
 const searchButton = document.querySelector("#search-button"); // Search button
+let searchForm = document.querySelector("#search-form");
 const currentWeatherDiv = document.querySelector(".currentWeather");
 const daysForecastDiv = document.querySelector(".forecastDays");
 
@@ -27,9 +28,9 @@ const createWeatherCard = (cityName, weatherItem, index) => {
                     </div>
                 </div>`;
   } else {
-    return ` class="mt-3 d-flex justify-content-between">
-                    <div class="card border-0 text-black">
-                        <div class="card-body p-3 text-white">
+    return ` <div class="mt-3 d-flex justify-content-between">
+                    <div class="card border-0 text-dark">
+                        <div class="card-body p-3 text-dark">
                             <h5 class="card-title fw-semibold">(${weatherItem.dt_txt.split(
                               " "
                             )[0]})</h5>
@@ -43,7 +44,8 @@ const createWeatherCard = (cityName, weatherItem, index) => {
                               .main.humidity}%</h6>
                         </div>
                     </div>
-                </div>`;
+                </div>`
+
   }
 };
 
@@ -77,12 +79,21 @@ const getWeatherDetails = (cityName, latitude, longitude) => {
           daysForecastDiv.insertAdjacentHTML("beforeend", html);
         }
       });
+      var locationHistory=document.createElement("button");
+      locationHistory.textContent = cityName;
+      document.querySelector("#history").appendChild(locationHistory)
+      var localcity =  [cityName];
+      localStorage.setItem("history",JSON.stringify(localcity));
+     
+
     })
-};
+}; 
+
 // Get coordinates of entered city name
 
-const getCityCoordinates = () => {
-  var cityName = cityInput.val().trim();
+function getCityCoordinates(event) {
+  event.preventDefault();
+  var cityName = cityInput.value.trim();
   if (cityName === "") return alert("Please enter a city name");
 console.log(cityName);
   const geoQueryURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${APIKey}`;
@@ -97,4 +108,4 @@ console.log(cityName);
     })
 };
 
-searchButton.addEventListener("click", getCityCoordinates);
+searchForm.addEventListener('submit', getCityCoordinates);

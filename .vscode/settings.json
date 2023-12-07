@@ -2,5 +2,6 @@
   "workbench.colorCustomizations": {},
   "[javascript]": {
     "editor.defaultFormatter": "bysabi.prettier-vscode-semistandard"
-  }
+  },
+  "liveServer.settings.port": 5501
 }
