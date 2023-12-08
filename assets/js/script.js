@@ -6,14 +6,14 @@ const daysForecastDiv = document.querySelector(".forecastDays");
 
 var APIKey = "6224c5c290251c06942ed184e3f76364"; //API Key
 
-
 //weather card
-const createWeatherCard = (cityName, weatherItem, index) => {
+function createWeatherCard(cityName, weatherItem, index) {
   if (index === 0) {
     return `<div class="mt-3 d-flex justify-content-between">
                     <div>
                         <h3 class="fw-bold">${cityName} (${weatherItem.dt_txt.split(
-      " ")[0]})</h3>
+      " "
+    )[0]})</h3>
                         <h6 class="my-3 mt-3">Temperature: ${(weatherItem.main
                           .temp - 273.15).toFixed(2)}°C</h6>
                         <h6 class="my-3">Wind: ${weatherItem.wind
@@ -44,68 +44,66 @@ const createWeatherCard = (cityName, weatherItem, index) => {
                               .main.humidity}%</h6>
                         </div>
                     </div>
-                </div>`
-
+                </div>`;
   }
-};
+}
 
 // Get weather details of passed latitude and longitude
 const getWeatherDetails = (cityName, latitude, longitude) => {
   const WEATHER_queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${APIKey}`;
-  fetch(WEATHER_queryURL)
-    .then(response => response.json())
-    .then(data => {
-      const forecastArray = data.list;
-      const uniqueForecastDays = new Set();
-      const fiveDaysForecast = forecastArray.filter(forecast => {
-        const forecastDate = new Date(forecast.dt_txt).getDate();
-        if (
-          !uniqueForecastDays.has(forecastDate) &&
-          uniqueForecastDays.size < 6
-        ) {
-          uniqueForecastDays.add(forecastDate);
-          return true;
-        }
-        return false;
-      });
-      cityInput.value = "";
-      currentWeatherDiv.innerHTML = "";
-      daysForecastDiv.innerHTML = "";
-      fiveDaysForecast.forEach((weatherItem, index) => {
-        const html = createWeatherCard(cityName, weatherItem, index);
-        if (index === 0) {
-          currentWeatherDiv.insertAdjacentHTML("beforeend", html);
-        } else {
-          daysForecastDiv.insertAdjacentHTML("beforeend", html);
-        }
-      });
-      var locationHistory=document.createElement("button");
-      locationHistory.textContent = cityName;
-      document.querySelector("#history").appendChild(locationHistory)
-      var localcity =  [cityName];
-      localStorage.setItem("history",JSON.stringify(localcity));
-     
-
-    })
-}; 
+  fetch(WEATHER_queryURL).then(response => response.json()).then(data => {
+    const forecastArray = data.list;
+    const uniqueForecastDays = new Set();
+    const fiveDaysForecast = forecastArray.filter(forecast => {
+      const forecastDate = new Date(forecast.dt_txt).getDate();
+      if (
+        !uniqueForecastDays.has(forecastDate) &&
+        uniqueForecastDays.size < 6
+      ) {
+        uniqueForecastDays.add(forecastDate);
+        return true;
+      }
+      return false;
+    });
+    cityInput.value = "";
+    currentWeatherDiv.innerHTML = "";
+    daysForecastDiv.innerHTML = "";
+    fiveDaysForecast.forEach((weatherItem, index) => {
+      const html = createWeatherCard(cityName, weatherItem, index);
+      if (index === 0) {
+        currentWeatherDiv.insertAdjacentHTML("beforeend", html);
+      } else {
+        daysForecastDiv.insertAdjacentHTML("beforeend", html);
+      }
+    });
+    var locationHistory = document.createElement("button");
+    locationHistory.textContent = cityName;
+    document.querySelector("#history").appendChild(locationHistory);
+    var localStorageCity = [cityName];
+    localStorage.setItem("history", JSON.stringify(localStorageCity));
+  });
+};
 
 // Get coordinates of entered city name
+function getCityCoordinates(cityName) {
+ 
+  const geoQueryURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${APIKey}`;
 
-function getCityCoordinates(event) {
+  fetch(geoQueryURL).then(response => response.json()).then(data => {
+    if (!data.length) return alert(`No coordinates found for ${cityName}`);
+    const { lat, lon, name } = data[0];
+    getWeatherDetails(name, lat, lon);
+    console.log(geoQueryURL);
+  });
+}
+
+getCityCoordinates("london")
+
+searchForm.addEventListener("submit", function(){
   event.preventDefault();
   var cityName = cityInput.value.trim();
   if (cityName === "") return alert("Please enter a city name");
-console.log(cityName);
-  const geoQueryURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${APIKey}`;
+  console.log(cityName);
 
-  fetch(geoQueryURL)
-    .then(response => response.json())
-    .then(data => {
-      if (!data.length) return alert(`No coordinates found for ${cityName}`);
-      const { lat, lon, name } = data[0];
-      getWeatherDetails(name, lat, lon);
-      console.log(geoQueryURL);
-    })
-};
-
-searchForm.addEventListener('submit', getCityCoordinates);
+  getCityCoordinates(cityName)
+});
