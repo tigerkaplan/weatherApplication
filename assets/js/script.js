@@ -11,9 +11,9 @@ function createWeatherCard(cityName, weatherItem, index) {
   if (index === 0) {
     return `<div class="mt-3 d-flex justify-content-between">
                     <div>
-                        <h3 class="fw-bold">${cityName} (${weatherItem.dt_txt.split(
+                        <h3 class="fw-bold">${cityName} ${weatherItem.dt_txt.split(
       " "
-    )[0]})</h3>
+    )[0]}</h3>
                         <h6 class="my-3 mt-3">Temperature: ${(weatherItem.main
                           .temp - 273.15).toFixed(2)}°C</h6>
                         <h6 class="my-3">Wind: ${weatherItem.wind
@@ -31,9 +31,9 @@ function createWeatherCard(cityName, weatherItem, index) {
     return ` <div class="mt-3 d-flex justify-content-between">
                     <div class="card border-0 text-dark">
                         <div class="card-body p-3 text-dark">
-                            <h5 class="card-title fw-semibold">(${weatherItem.dt_txt.split(
+                            <h5 class="card-title fw-semibold">${weatherItem.dt_txt.split(
                               " "
-                            )[0]})</h5>
+                            )[0]}</h5>
                             <img src="https://openweathermap.org/img/wn/${weatherItem
                               .weather[0].icon}.png" alt="weather icon">
                             <h6 class="card-text my-3 mt-3">Temp: ${(weatherItem
