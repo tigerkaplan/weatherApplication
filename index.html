@@ -18,7 +18,7 @@
   </header>
 
   <!-- max-width for ultra wide resolutions -->
-  <div class="container-fluid" style="max-width: 1400px">
+  <div class="container" style="max-width: 1400px">
     <div class="row">
       <aside class="col-lg-3 pb-3">
         <h4 id="form-heading" class="mt-1 h3 form-label" fw>Search for a City: </h4>
@@ -36,17 +36,17 @@
           </div>
         </form>
         <hr class="hr weather-hr" />
-        <div class="list-group" id="history">
-
+        <div class="list-group d-grid gap-lg-3" " id="history">
+          <br>
         </div>
       </aside>
 
       <div class="col-lg-9 pb-3">
         <section id="today" class="mt-3" role="region" aria-live="polite">
-          <div class="currentWeather border text-black py-2 px-4 rounded-3 ">
+          <div class="currentWeather border  py-2 px-4 rounded-3 ">
             <div class="mt-3 d-flex justify-content-between">
               <div>
-                <h3 class="fw-bold">_______ ( ______ )</h3>
+                <h3 class="fw-bold">_______  ______ </h3>
                 <img src="" class="weatherIcon">
                 <h6 class="my-3 mt-3">Temperature: __°C</h6>
                 <h6 class="my-3">Wind: __ M/S</h6>
@@ -58,11 +58,22 @@
 
         <section id="forecast" class="row mt-3" role="region" aria-live="polite">
           <h4 class="fw-bold my-4">5-Day Forecast</h4>
-          <div class="forecastDays row row-cols-1 row-cols-sm-2 row-cols-lg-4 row-cols-xl-5 justify-content-between">
+          <div class="forecastDays  row row-cols-1 row-cols-sm-2 row-cols-lg-4 row-cols-xl-5 justify-content-between">
+            <div class="col mb-3 ">
+              <div class="card border-1 ">
+                <div class="card-body p-3 border ">
+                  <h5 class="card-title fw-semibold">______</h5>
+                  <img src="" class="weatherIcon">
+                  <h6 class="card-text  my-3 mt-3">Temp: __°C</h6>
+                  <h6 class="card-text t my-3">Wind: __ M/S</h6>
+                  <h6 class="card-text my-3">Humidity: __%</h6>
+                </div>
+              </div>
+            </div>
             <div class="col mb-3">
-              <div class="card border-0 text-black">
-                <div class="card-body p-3 border text-black">
-                  <h5 class="card-title fw-semibold">( ______ )</h5>
+              <div class="card border-0 text-light">
+                <div class="card-body p-3 border  text-light">
+                  <h5 class="card-title fw-semibold"> ______ </h5>
                   <img src="" class="weatherIcon">
                   <h6 class="card-text my-3 mt-3">Temp: __°C</h6>
                   <h6 class="card-text my-3">Wind: __ M/S</h6>
@@ -71,19 +82,8 @@
               </div>
             </div>
             <div class="col mb-3">
-              <div class="card border-0 text-black">
-                <div class="card-body p-3 border  text-black">
-                  <h5 class="card-title fw-semibold">( ______ )</h5>
-                  <img src="" class="weatherIcon">
-                  <h6 class="card-text my-3 mt-3">Temp: __°C</h6>
-                  <h6 class="card-text my-3">Wind: __ M/S</h6>
-                  <h6 class="card-text my-3">Humidity: __%</h6>
-                </div>
-              </div>
-            </div>
-            <div class="col mb-3">
-              <div class="card border-0 text-black">
-                <div class="card-body p-3 border  text-black">
+              <div class="card border-0 text-light">
+                <div class="card-body p-3 border  text-light">
                   <h5 class="card-title fw-semibold"> </h5>
                   <img src="" class="weatherIcon">
                   <h6 class="card-text my-3 mt-3">Temp: __°C</h6>
@@ -93,9 +93,9 @@
               </div>
             </div>
             <div class="col mb-3">
-              <div class="card border-0 text-black">
-                <div class="card-body p-3 border  text-black">
-                  <h5 class="card-title fw-semibold">( ______ )</h5>
+              <div class="card border-0 text-light">
+                <div class="card-body p-3 border  text-light">
+                  <h5 class="card-title fw-semibold"> ______ </h5>
                   <img src="" class="weatherIcon">
                   <h6 class="card-text my-3 mt-3">Temp: __°C</h6>
                   <h6 class="card-text my-3">Wind: __ M/S</h6>
@@ -104,9 +104,9 @@
               </div>
             </div>
             <div class="col mb-3">
-              <div class="card border-0 text-black">
-                <div class="card-body p-3 border text-black">
-                  <h5 class="card-title fw-semibold">( ______ )</h5>
+              <div class="card border-0 text-light">
+                <div class="card-body p-3 border text-light">
+                  <h5 class="card-title fw-semibold"> ______ </h5>
                   <img src="" class="weatherIcon">
                   <h6 class="card-text my-3 mt-3">Temp: __°C</h6>
                   <h6 class="card-text my-3">Wind: __ M/S</h6>
