@@ -5,6 +5,13 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin: 0;
   padding: 0;
-  color: black;
+  /* color: black; */
 }
 
+.card-body {
+  background-color: #BBBFD6;
+}
+
+.weather-header {
+  background-color: #97A1DB;
+}
