@@ -78,15 +78,25 @@ const getWeatherDetails = (cityName, latitude, longitude) => {
     });
     var locationHistory = document.createElement("button");
     locationHistory.textContent = cityName;
+    locationHistory.addEventListener("click", function() {
+      getCityCoordinates(cityName);
+    });
     document.querySelector("#history").appendChild(locationHistory);
-    var localStorageCity = [cityName];
-    localStorage.setItem("history", JSON.stringify(localStorageCity));
+    var btnhstory = JSON.parse(localStorage.getItem("history"));
+    if (btnhstory) {
+      if (!btnhstory.includes(cityName)){
+        btnhstory.push(cityName);
+        localStorage.setItem("history", JSON.stringify(btnhstory));
+      }
+    } else {
+      var localStorageCity = [cityName];
+      localStorage.setItem("history", JSON.stringify(localStorageCity));
+    }
   });
 };
 
 // Get coordinates of entered city name
 function getCityCoordinates(cityName) {
- 
   const geoQueryURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${APIKey}`;
 
   fetch(geoQueryURL).then(response => response.json()).then(data => {
@@ -97,13 +107,13 @@ function getCityCoordinates(cityName) {
   });
 }
 
-getCityCoordinates("london")
+getCityCoordinates("london");
 
-searchForm.addEventListener("submit", function(){
+searchForm.addEventListener("submit", function() {
   event.preventDefault();
   var cityName = cityInput.value.trim();
   if (cityName === "") return alert("Please enter a city name");
   console.log(cityName);
 
-  getCityCoordinates(cityName)
+  getCityCoordinates(cityName);
 });
