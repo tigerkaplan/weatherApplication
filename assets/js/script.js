@@ -76,17 +76,53 @@ const getWeatherDetails = (cityName, latitude, longitude) => {
         daysForecastDiv.insertAdjacentHTML("beforeend", html);
       }
     });
+    // var locationHistory = document.createElement("button");
+    // locationHistory.textContent = cityName;
+    // locationHistory.addEventListener("click", function() {
+    //   getCityCoordinates(cityName);
+    // });
+    // document.querySelector("#history").appendChild(locationHistory);
+    // var historyButton = JSON.parse(localStorage.getItem("history"));
+    // if (historyButton) {
+    //   if (!historyButton.includes(cityName)){
+    //     historyButton.push(cityName);
+    //     localStorage.setItem("history", JSON.stringify(historyButton));
+    //   }
+    // } else {
+    //   var localStorageCity = [cityName];
+    //   localStorage.setItem("history", JSON.stringify(localStorageCity));
+    // }
+
+    // creating a new button 
     var locationHistory = document.createElement("button");
+    // text content of button 
     locationHistory.textContent = cityName;
-    document.querySelector("#history").appendChild(locationHistory);
-    var localStorageCity = [cityName];
-    localStorage.setItem("history", JSON.stringify(localStorageCity));
+    var historyButtons = document.querySelectorAll("#history button");
+    var isButtonCreated = Array.from(historyButtons).some(
+      button => button.textContent === cityName
+    );
+
+    // a button is created ?
+    if (!isButtonCreated) {
+      //no button created
+      locationHistory.addEventListener("click", function() {
+        getCityCoordinates(cityName);
+      });
+      // create new button
+      document.querySelector("#history").appendChild(locationHistory);
+
+      // local storage
+      var historyButton = JSON.parse(localStorage.getItem("history")) || [];
+      if (!historyButton.includes(cityName)) {
+        historyButton.push(cityName);
+        localStorage.setItem("history", JSON.stringify(historyButton));
+      }
+    }
   });
 };
 
 // Get coordinates of entered city name
 function getCityCoordinates(cityName) {
- 
   const geoQueryURL = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${APIKey}`;
 
   fetch(geoQueryURL).then(response => response.json()).then(data => {
@@ -97,13 +133,13 @@ function getCityCoordinates(cityName) {
   });
 }
 
-getCityCoordinates("london")
+getCityCoordinates("london");
 
-searchForm.addEventListener("submit", function(){
+searchForm.addEventListener("submit", function() {
   event.preventDefault();
   var cityName = cityInput.value.trim();
   if (cityName === "") return alert("Please enter a city name");
   console.log(cityName);
 
-  getCityCoordinates(cityName)
+  getCityCoordinates(cityName);
 });
