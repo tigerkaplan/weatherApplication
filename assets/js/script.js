@@ -134,12 +134,15 @@ function getCityCoordinates(cityName) {
 }
 
 getCityCoordinates("london");
+getCityCoordinates("london");
 
+searchForm.addEventListener("submit", function() {
 searchForm.addEventListener("submit", function() {
   event.preventDefault();
   var cityName = cityInput.value.trim();
   if (cityName === "") return alert("Please enter a city name");
   console.log(cityName);
 
+  getCityCoordinates(cityName);
   getCityCoordinates(cityName);
 });
